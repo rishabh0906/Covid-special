@@ -1,11 +1,11 @@
 const puppy=require("puppeteer");
 const fs=require("fs");
 
-
+// facebook id and password //
 let email="winivab163@drluotan.com";
 let pwd="qwerty@123";
 let preprocess=" Data is related to  website (https://covid.army) \n Needy person can visit this website for more !!";
-
+// main function
 async function main()
   {
     const browser= await puppy.launch(
@@ -38,12 +38,12 @@ async function main()
            fileName.push(text+".json");
        }
 
-  
+  //Storing data ans json files//
      for(let i=0;i<linksURL.length;i++)
        {
         let data={};
          data["url"]=linksURL[i];
-         await collect(linksURL[i],browser).then((info)=>{                        //storing data in json files
+         await collect(linksURL[i],browser).then((info)=>{                       
               data["info"]=info;                                
         });                                                                              
          fs.writeFileSync(fileName[i],JSON.stringify(data));
@@ -58,7 +58,9 @@ async function main()
     
     }
 
-async function collect(url,browser)                                        //to collect data from webpages
+
+     // collect data from webpages
+async function collect(url,browser)                                       
     {       
       let  page=await browser.newPage() ;
       await page.goto(url);
@@ -81,8 +83,8 @@ page.close();
 return Promise.all(promises);
   
 }
-
-async function fbWork(tab,finalData,browser)                                                    //to post data on facebook
+  // post data on facebook
+async function fbWork(tab,finalData,browser)                                                  
     {
       const context = browser.defaultBrowserContext();
       context.overridePermissions("https://www.facebook.com", []);
@@ -104,7 +106,8 @@ async function fbWork(tab,finalData,browser)                                    
    await browser.close();
   } 
 
-async function ProcessData(filename)                                           //preprocess data
+  //preprocess data for facebook post //
+async function ProcessData(filename)                                           
   {
      let finalData=[];
      for(let i=0;i<filename.length;i++)
@@ -124,5 +127,5 @@ async function ProcessData(filename)                                           /
 
      return finalData;
   }
-
-main();                                      //call
+ //call
+main();                                     
