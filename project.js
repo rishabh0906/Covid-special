@@ -27,7 +27,7 @@ async function main()
     for(let i=0;i<links.length;i++)
        {
            let link=await tab.evaluate((data)=>{
-                       
+
             return data.getAttribute("href");
            },links[i]);
            linksURL.push("https://covid.army"+link);
@@ -38,7 +38,7 @@ async function main()
            fileName.push(text+".json");
        }
 
-  //Storing data ans json files//
+  //Storing data as json files//
      for(let i=0;i<linksURL.length;i++)
        {
         let data={};
@@ -51,11 +51,9 @@ async function main()
 
         await ProcessData(fileName).then((finalData)=>{
         fbWork(tab,finalData,browser);
-             
+
        });
-
-
-    
+       
     }
 
 
